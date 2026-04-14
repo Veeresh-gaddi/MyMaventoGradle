@@ -1,36 +1,40 @@
 pipeline {
-    agent any
+    agent any  // Use any available agent
 
     tools {
-        jdk 'JDK'
+        gradle 'Gradle'  // Ensure this matches the name configured in Jenkins
+        jdk 'JDK11'
     }
-
     stages {
-
         stage('Checkout') {
             steps {
-                git branch: 'master', url: 'https://github.com/Veeresh-gaddi/MyMaventoGradle.git'
+                git branch: 'master', url: 'https://github.com/harishbitcse82/MyGradleApp01.git'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'chmod +x gradlew'
-                sh './gradlew clean build'
+                sh 'gradle build'  // Run Gradle build
             }
         }
 
         stage('Test') {
             steps {
-                sh './gradlew test'
+                sh 'gradle test'  // Run unit tests
             }
         }
 
+        
+        
+       
         stage('Run Application') {
             steps {
-                sh './gradlew run'
+                // Start the JAR application
+                sh 'gradle run'
             }
         }
+
+        
     }
 
     post {
